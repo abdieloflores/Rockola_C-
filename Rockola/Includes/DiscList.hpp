@@ -18,8 +18,10 @@ class DiscList
         void Modify(NodoDisc *);
         void Delete(NodoDisc *);
         void Show_All(NodoDisc *);
+        void Show_All_Names(NodoDisc *);
+        void Show_For_Genre(NodoDisc *,string);
 
-        NodoDisc *Get_Search(string);
+        NodoDisc *Get_Search(NodoDisc *,string);
 };
 
 #endif /* DiscList_hpp */

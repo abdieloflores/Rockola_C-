@@ -1,41 +1,92 @@
 #include <iostream>
 #include "Menu.hpp"
+#include "DiscList.hpp"
+#include "SongList.hpp"
 
 using namespace std;
 
+NodoDisc *Aux = NULL;
+DiscList *Discs = new DiscList();
+
+NodoSong *Aux2 = NULL;
+SongList *Songs = new SongList();
+
+Menu::Menu()
+{
+    
+}
+
+Menu::~Menu()
+{
+    
+}
+
 void Menu::mainMenu()
 {
+    Discs->Set_Head(Aux);
     int option,finish=1;
+    string name, artist, genre, year;
     while (finish==1)
     {
         system("clear");
         cout<<"\t\t\t- ROCKOLA -"<<endl;
-        cout<<"\t\t\"Menu Principal\"\n"<<endl;
+        cout<<"\t\t  \"Menu Principal\"\n"<<endl;
 
         cout<<"\t1.- Lista de Discos"<<endl;
-        cout<<"\t2.- Lista de Canciones de un Disco"<<endl;
+        cout<<"\t2.- Reproducir Disco"<<endl;
         cout<<"\t3.- Agregar Disco"<<endl;
         cout<<"\t4.- Modificar Disco"<<endl;
         cout<<"\t5.- Eliminar Disco"<<endl;
-        cout<<"\t6.- Ordenar Discos"<<endl;
-        cout<<"\t7.- Mostrar Albums"<<endl;
-        cout<<"\t8.- Salir\n"<<endl;
-        cout<<"Opcion:\t";
+        cout<<"\t6.- Mostrar Albums"<<endl;
+        cout<<"\t7.- Salir\n"<<endl;
+        cout<<"Opcion: ";
         cin>>option;
 
         switch (option)
         {
             case 1:
-
+                discMenu();
                 break;
             case 2:
-            
+                
                 break;
             case 3:
-            
+                system("clear");
+                cout<<"\t\t\t- ROCKOLA -"<<endl;
+                cout<<"\t\t\"Agregando Disco\"\n"<<endl;
+                
+                cin.ignore();
+                cout<<"Ingrese Nombre: ";getline(cin,name);
+                cout<<"Ingrese Artista: ";getline(cin,artist);
+                cout<<"Ingrese Genero: "<<endl;genreMenu(genre);
+                cin.ignore();
+                cout<<"Ingrese Año: ";getline(cin,year);
+                
+                Discs->Insert(Aux, name, artist, genre, year);
+                
+                cout<<"\n✔ Agregado con Éxito ✔"<<endl;
+                cout<<"\nPresiones cualquier tecla para continuar";
+                cin.get();
+                
                 break;
             case 4:
-            
+                system("clear");
+                cout<<"\t\t\t- ROCKOLA -"<<endl;
+                cout<<"\t\t\"Modificando Disco\"\n"<<endl;
+                Discs->Show_All_Names(Aux);
+                cout<<endl<<endl;
+                cin.ignore();
+                cout<<"Ingrese el nombre del disco: ";getline(cin,name);
+                if (Discs->Get_Search(Aux,name)==NULL) {
+                    system("clear");
+                    cout<<"x No se encontro el disco a modificar x"<<endl<<endl;
+                    cout<<"\"Favor de escribir el nombre del disco\ncomo aparece en la lista o verifique que\neste agregado el disco.\"";
+                    
+                    cout<<"\nPresiones cualquier tecla para continuar";
+                    cin.get();
+                }else{
+                    modifyDiscMenu(Discs->Get_Search(Aux,name));
+                }
                 break;
             case 5:
             
@@ -44,10 +95,8 @@ void Menu::mainMenu()
             
                 break;
             case 7:
-            
-                break;
-            case 8:
                 finish=0;
+                exit(1);
                 break;
             default:
                 system("clear");
@@ -61,10 +110,11 @@ void Menu::mainMenu()
 
 
 
-void Menu::albumMenu()
+void Menu::discMenu()
 {
     int option,finish=1;
-
+    string genre;
+    
     while (finish==1)
     {
         system("clear");
@@ -80,10 +130,25 @@ void Menu::albumMenu()
         switch (option)
         {
             case 1:
+                system("clear");
+                Discs->Show_All(Aux);
+                cin.ignore();
+                cout<<"\n¿Dese Reproducir un Disco?";
+                cout<<"1.-SI\n2.-NO"<<endl;
+                cin>>option;
+                switch (option) {
+                    case 1:
 
+                        break;
+                    case 2:
+                        
+                        break;
+                }
                 break;
             case 2:
-            
+                cout<<"Selecciones el genero: ";
+                genreMenu(genre);
+                Discs->Show_For_Genre(Aux,genre);
                 break;
             case 3:
                 finish=0;
@@ -126,7 +191,7 @@ void Menu::genreMenu(string &genre)
     cout<<"\t21.- Flamenco"<<endl;
     cout<<"\t22.- Salsa"<<endl;
     cout<<"\t23.- Reggaeton\n"<<endl;
-    cout<<"Opción:\t";
+    cout<<"Opción: ";
     cin>>option;
 
     switch (option)
@@ -202,7 +267,7 @@ void Menu::genreMenu(string &genre)
         break;
     }
 }
-void Menu::songsMenu()
+void Menu::songsMenu(NodoDisc *Disc)
 {
     int option,finish=1;
 
@@ -210,13 +275,18 @@ void Menu::songsMenu()
     {
         system("clear");
         cout<<"\t\t\t- ROCKOLA -\n"<<endl;
-        /*Aquí deben ir los datos del disco a modificar
-        Nombre:
-        Interprete:
-        Genero:
-        Año:
-        Duración:
-        */
+        
+        cout<<"Nombre: "<<Disc->Get_Name()<<endl;
+        cout<<"Artista: "<<Disc->Get_Artist()<<endl;
+        cout<<"Genero: "<<Disc->Get_Genre()<<endl;
+        cout<<"Año: " <<Disc->Get_Year()<<endl;
+        cout<<"Duración: ";
+            if(Disc->Get_Duration()>0){
+                cout<<Disc->Get_Duration()/60<<":"<<Disc->Get_Duration() - ((Disc->Get_Duration()/60)*60)<<" min."<<endl;
+            }else{
+                cout<<"0:0 min."<<endl<<endl;
+            }
+        
         cout<<"\t 1.- Ver Canciones"<<endl;
         cout<<"\t 2.- Agregar Canción"<<endl;
         cout<<"\t 3.- Reproducir Canción"<<endl;
@@ -224,7 +294,7 @@ void Menu::songsMenu()
         cout<<"\t 5.- Eliminar Canción"<<endl;
         cout<<"\t 6.- Eliminar Todas Las Canciones"<<endl;
         cout<<"\t 7.- Regresar al Menu Principal\n"<<endl;
-        cout<<"Opcion: \t";
+        cout<<"Opcion: ";
         cin>>option;
 
         switch (option)
@@ -270,12 +340,17 @@ void Menu::modifyDiscMenu(NodoDisc *modified){
         system("clear");
         cout<<"\t\t\t- ROCKOLA -"<<endl;
         cout<<"\t\t\"Modificando Disco\"\n"<<endl;
-
+        
         cout<<"Nombre: "<<modified->Get_Name()<<endl;
         cout<<"Artista: "<<modified->Get_Artist()<<endl;
         cout<<"Genero: "<<modified->Get_Genre()<<endl;
-        cout<<"Año: " <<modified->Get_Year();
-        cout<<"Duración: "<<modified->Get_Duration()/60<<" minutos, "<<modified->Get_Duration() - ((modified->Get_Duration()/60)*60)<<" segundos.";
+        cout<<"Año: " <<modified->Get_Year()<<endl;
+        cout<<"Duración: ";
+        if(modified->Get_Duration()>0){
+            cout<<modified->Get_Duration()/60<<":"<<modified->Get_Duration() - ((modified->Get_Duration()/60)*60)<<" min."<<endl;
+        }else{
+            cout<<"0:0 min."<<endl<<endl;
+        }
 
         cout<<"\t1.- Modificar Info Completa"<<endl;
         cout<<"\t2.- Modificar Nombre"<<endl;
@@ -283,16 +358,18 @@ void Menu::modifyDiscMenu(NodoDisc *modified){
         cout<<"\t4.- Modificar Genero"<<endl;
         cout<<"\t5.- Modificar Año"<<endl;
         cout<<"\t6.- Regresar Menu Principal\n"<<endl;
-        cout<<"Opcion:\t";
+        cout<<"Opcion: ";
         cin>>option;
 
         switch (option)
         {
             case 1:
                 system("clear");
+                cin.ignore();
                 cout<<"Ingrese Nombre: ";getline(cin,name);
                 cout<<"Ingrese Artista: ";getline(cin,artist);
                 cout<<"Ingrese Genero: "<<endl;genreMenu(genre);
+                cin.ignore();
                 cout<<"Ingrese Año: ";getline(cin,year);
                 modified->Set_Name(name);
                 modified->Set_Artist(artist);
@@ -354,46 +431,67 @@ void Menu::modifyDiscMenu(NodoDisc *modified){
     mainMenu();
 }
 
-void Menu::modifySongMenu(){
-    int option,finish=1;
+void Menu::modifySongMenu(NodoSong *modified){
+    int option,finish=1, duration;
+    string name, disc;
 
     while (finish==1)
     {
         system("clear");
         cout<<"\t\t\t- ROCKOLA -"<<endl;
         cout<<"\t\t\"Modificando Cancion\"\n"<<endl;
-        /*Aquí deben ir los datos del disco a modificar
-        Nombre:
-        Interprete:
-        Genero:
-        Año:
-        Duración:
-        */
+        cout<<"Nombre: "<<modified->Get_Name()<<endl;
+        cout<<"Duración: ";
+        if(modified->Get_Duration()>0){
+            cout<<modified->Get_Duration()/60<<":"<<modified->Get_Duration() - ((modified->Get_Duration()/60)*60)<<" min."<<endl;
+        }else{
+            cout<<"0:0 min."<<endl<<endl;
+        }
+        
         cout<<"\t1.- Modificar Info Completa"<<endl;
         cout<<"\t2.- Modificar Nombre"<<endl;
         cout<<"\t3.- Modificar Duracion"<<endl;
         cout<<"\t4.- Regresar Menu Anterior\n"<<endl;
-        cout<<"Opcion:\t";
+        cout<<"Opcion: ";
         cin>>option;
 
         switch (option)
         {
             case 1:
+                system("clear");
+                cin.ignore();
+                cout<<"Ingrese Nombre: ";getline(cin,name);
+                cout<<"Ingrese Duracion: ";cin>>duration;
+                cin.ignore();
+                modified->Set_Name(name);
+                modified->Set_Duration(duration);
 
+                cout<<"\n\n✔ Modificado con Éxito ✔"<<endl;
+                cin.ignore();
+                cout<<"\nPresiones cualquier tecla para continuar";
+                cin.get();
                 break;
             case 2:
-            
+                system("clear");
+                cin.ignore();
+                cout<<"Ingrese Nombre: ";getline(cin,name);
+                modified->Set_Name(name);
+                cout<<"\n\n✔ Modificado con Éxito ✔"<<endl;
+                cin.ignore();
+                cout<<"\nPresiones cualquier tecla para continuar";
+                cin.get();
                 break;
             case 3:
-            
+                system("clear");
+                cin.ignore();
+                cout<<"Ingrese Duracion: ";cin>>duration;
+                modified->Set_Duration(duration);
+                cout<<"\n\n✔ Modificado con Éxito ✔"<<endl;
+                cin.ignore();
+                cout<<"\nPresiones cualquier tecla para continuar";
+                cin.get();
                 break;
             case 4:
-            
-                break;
-            case 5:
-            
-                break;
-            case 6:
                 finish=0;
                 break;
             default:
@@ -404,5 +502,5 @@ void Menu::modifySongMenu(){
                 break;
         }
     }
-    songsMenu();
+    songsMenu(Discs->Get_Search(Aux,modified->Get_Name()));
 }

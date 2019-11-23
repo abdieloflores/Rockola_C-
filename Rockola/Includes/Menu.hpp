@@ -3,18 +3,20 @@
 
 #include <stdio.h>
 #include "Nodo.hpp"
+#include "DiscList.hpp"
+#include "SongList.hpp"
 
 class Menu
 {
     public:
-        /*Menu();
-        ~Menu();*/
+        Menu();
+        ~Menu();
         void mainMenu();
-        void albumMenu();
+        void discMenu();
         void genreMenu(string &);
-        void songsMenu();
+        void songsMenu(NodoDisc*);
         void modifyDiscMenu(NodoDisc*);
-        void modifySongMenu();
+        void modifySongMenu(NodoSong*);
 };
 
 #endif /* Menu_hpp */

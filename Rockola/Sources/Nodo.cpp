@@ -5,6 +5,7 @@
 NodoDisc::NodoDisc()
 {
     next = NULL;
+    duration = 0;
 }
 NodoDisc::~NodoDisc()
 {
