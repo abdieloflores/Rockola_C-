@@ -115,7 +115,7 @@ void DiscList::Show_For_Genre(NodoDisc *_head,string _gener)
 {
     NodoDisc *aux1 = _head;
     NodoDisc *aux2;
-    int count=1;
+    int count=1,count2=0;
 
     if(aux1 == NULL)
     {
@@ -128,10 +128,14 @@ void DiscList::Show_For_Genre(NodoDisc *_head,string _gener)
                 if (aux1->Get_Genre() == _gener) {
                     cout<<count<<".- "<<aux1->Get_Name()<<endl;
                     count++;
+                    count2++;
                 }
                 aux2 = aux1;
                 aux1 = aux1->Get_Next();
             }while (aux1 != NULL);
+        if (count2 == 0) {
+            cout<<"x No hay Discos del Genero Seleccionado x\n"<<endl;
+        }
     }
 }
 

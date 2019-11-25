@@ -1,6 +1,7 @@
 #include <string>
 #include "SongList.hpp"
 #include "DiscList.hpp"
+#include "Nodo.hpp"
 
 
 SongList::SongList()
@@ -21,7 +22,7 @@ NodoSong *SongList::Get_Head()
     return head;
 }
 
-void Insert(NodoSong *&_head,NodoDisc *Disc,string _name,int _duration,string _disc)
+void SongList::Insert(NodoSong *&_head,NodoDisc *Disc,string _name,int _duration,string _disc)
 {
     NodoSong *new_nodo = new NodoSong();
     new_nodo->Set_Name(_name);
@@ -47,7 +48,7 @@ void Insert(NodoSong *&_head,NodoDisc *Disc,string _name,int _duration,string _d
     new_nodo->Set_Next(aux1);
 }
 
-void Duration_Album(NodoDisc *Disc,NodoSong *_Song)
+void SongList::Duration_Disc(NodoDisc *Disc,NodoSong *_Song)
 {
     NodoSong *aux1 = _Song;
     NodoSong *aux2 = NULL;
@@ -57,28 +58,93 @@ void Duration_Album(NodoDisc *Disc,NodoSong *_Song)
 
     while (aux1 != NULL)
     {
+        if (aux1->Get_Disc() == Disc->Get_Name()) {
+            suma = suma + aux1->Get_Duration();
+        }
         aux2 = aux1;
         aux1 = aux1->Get_Next();
-        if (aux1->Get_Disc() == Disc->Get_Name()) {
-            suma += aux1->Get_Duration();
-        }
     }
     Disc->Set_Duration(suma);
 }
 
-void Modify(NodoSong *_modified)
+void SongList::Modify(NodoSong *_modified)
 {
     Menu modifySong;
     modifySong.modifySongMenu(_modified);
     modifySong.~Menu();
 }
-void Delete(NodoSong *)
+
+void SongList::Delete(NodoSong *&_head,string _name)
 {
-    
-}
-void Show_All(NodoSong *)
-{
-    
+    if (_head != NULL)
+    {
+        NodoSong *aux_delete;
+        NodoSong *previous = NULL;
+        aux_delete = _head;
+        
+        while ((aux_delete != NULL) && (aux_delete->Get_Name()>_name))
+        {
+            previous = aux_delete;
+            aux_delete = aux_delete->Get_Next();
+        }
+        if (aux_delete==NULL) {
+            cout<<"La canción a eliminar no existe";
+        }
+        else if(previous == NULL){
+            _head = _head->Get_Next();
+            delete aux_delete;
+        }else{
+            previous->Set_Next(aux_delete->Get_Next());
+            delete aux_delete;
+        }
+    }
 }
 
-NodoDisc *Get_Search(NodoSong *,string);
+
+void SongList::Show_Songs(NodoSong *_head,string disc)
+{
+        NodoSong *aux1 = _head;
+        NodoSong *aux2;
+        int cont=1;
+
+       if(aux1 == NULL)
+       {
+
+           cout<<"x No hay canciones agregadas en el Discox\n"<<endl;
+
+       }else{
+           if ((aux1 != NULL) && disc == aux1->Get_Disc()) {
+               do
+               {
+                   cout<<cont<<".- "<<aux1->Get_Name()<<endl;
+                   aux2 = aux1;
+                   aux1 = aux1->Get_Next();
+                   cont++;
+               }while (aux1 != NULL);
+           }
+           
+           if (cont == 0)
+           {
+               cout<<"x No hay canciones agregadas en el disco x\n"<<endl;
+           }
+       }
+}
+
+NodoSong *SongList::Get_Search(NodoSong *_head,string disc)
+{
+    NodoSong *aux1 = _head;
+    NodoSong *aux2 = NULL;
+
+    while (aux1 != NULL && _head->Get_Name() != disc)
+    {
+            aux2 = aux1;
+            aux1 = aux1->Get_Next();
+    }
+    
+    if (aux1 == NULL)
+    {
+        return NULL;
+    }else{
+        return aux1;
+    }
+}

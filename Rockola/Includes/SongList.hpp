@@ -3,6 +3,7 @@
 
 #include "Nodo.hpp"
 #include "Menu.hpp"
+#include "DiscList.hpp"
 
 class SongList{
     private:
@@ -14,12 +15,12 @@ class SongList{
         NodoSong *Get_Head();
 
         void Insert(NodoSong *&,NodoDisc *,string,int,string);
-        void Duration_Disc(NodoDisc *);
+        void Duration_Disc(NodoDisc *,NodoSong *);
         void Modify(NodoSong *);
-        void Delete(NodoSong *);
-        void Show_All(NodoSong *);
+        void Delete(NodoSong *&,string);
+        void Show_Songs(NodoSong *,string);
 
-        NodoDisc *Get_Search(NodoSong *,string);
+        NodoSong *Get_Search(NodoSong *,string);
     
 };
 

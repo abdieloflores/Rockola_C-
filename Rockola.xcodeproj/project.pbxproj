@@ -92,8 +92,8 @@
 			children = (
 				7E0CA19C238856BB0093A042 /* Menu.cpp */,
 				7E0CA19F2388577D0093A042 /* Nodo.cpp */,
-				7EA2FAB32388960600A669F1 /* SongList.cpp */,
 				7E0CA1A22388590B0093A042 /* DiscList.cpp */,
+				7EA2FAB32388960600A669F1 /* SongList.cpp */,
 			);
 			path = Sources;
 			sourceTree = "<group>";

@@ -2,13 +2,14 @@
 #include "Menu.hpp"
 #include "DiscList.hpp"
 #include "SongList.hpp"
+#include "Nodo.hpp"
 
 using namespace std;
 
 NodoDisc *Aux = NULL;
 DiscList *Discs = new DiscList();
 
-NodoSong *Aux2 = NULL;
+NodoSong *Song = NULL;
 SongList *Songs = new SongList();
 
 Menu::Menu()
@@ -24,7 +25,8 @@ Menu::~Menu()
 void Menu::mainMenu()
 {
     Discs->Set_Head(Aux);
-    int option,finish=1;
+    Songs->Set_Head(Song);
+    int option,finish=1,finish2=1;
     string name, artist, genre, year;
     while (finish==1)
     {
@@ -37,8 +39,7 @@ void Menu::mainMenu()
         cout<<"\t3.- Agregar Disco"<<endl;
         cout<<"\t4.- Modificar Disco"<<endl;
         cout<<"\t5.- Eliminar Disco"<<endl;
-        cout<<"\t6.- Mostrar Albums"<<endl;
-        cout<<"\t7.- Salir\n"<<endl;
+        cout<<"\t6.- Salir\n"<<endl;
         cout<<"Opcion: ";
         cin>>option;
 
@@ -48,6 +49,25 @@ void Menu::mainMenu()
                 discMenu();
                 break;
             case 2:
+                
+                while (finish2 == 1)
+                {
+                    system("clear");
+                    Discs->Show_All_Names(Aux);
+                    cin.ignore();
+                    cout<<"Escriba el nombre del disco: ";
+                    getline(cin,name);
+                    if(Discs->Get_Search(Aux,name)!=NULL)
+                    {
+                        songsMenu(Discs->Get_Search(Aux,name));
+                        finish2 = 0;
+                    }else{
+                        system("clear");
+                        cout<<" x No escribio correctamente el nombre x";
+                        cout<<"\nPresiones cualquier tecla para continuar";
+                        cin.get();
+                    }
+                }
                 
                 break;
             case 3:
@@ -92,9 +112,6 @@ void Menu::mainMenu()
             
                 break;
             case 6:
-            
-                break;
-            case 7:
                 finish=0;
                 exit(1);
                 break;
@@ -133,22 +150,17 @@ void Menu::discMenu()
                 system("clear");
                 Discs->Show_All(Aux);
                 cin.ignore();
-                cout<<"\n¿Dese Reproducir un Disco?";
-                cout<<"1.-SI\n2.-NO"<<endl;
-                cin>>option;
-                switch (option) {
-                    case 1:
-
-                        break;
-                    case 2:
-                        
-                        break;
-                }
+                cout<<"Presione cualquier tecla para continuar";
+                cin.get();
                 break;
             case 2:
                 cout<<"Selecciones el genero: ";
                 genreMenu(genre);
+                system("clear");
                 Discs->Show_For_Genre(Aux,genre);
+                cin.ignore();
+                cout<<"Presione cualquier tecla para continuar";
+                cin.get();
                 break;
             case 3:
                 finish=0;
@@ -269,7 +281,8 @@ void Menu::genreMenu(string &genre)
 }
 void Menu::songsMenu(NodoDisc *Disc)
 {
-    int option,finish=1;
+    int option,finish=1,duration;
+    string _name;
 
     while (finish == 1)
     {
@@ -282,9 +295,15 @@ void Menu::songsMenu(NodoDisc *Disc)
         cout<<"Año: " <<Disc->Get_Year()<<endl;
         cout<<"Duración: ";
             if(Disc->Get_Duration()>0){
-                cout<<Disc->Get_Duration()/60<<":"<<Disc->Get_Duration() - ((Disc->Get_Duration()/60)*60)<<" min."<<endl;
+                cout<<Disc->Get_Duration()/60<<":";
+                if ((Disc->Get_Duration() - ((Disc->Get_Duration()/60)*60))<10) {
+                  cout<<"0"<<Disc->Get_Duration() - ((Disc->Get_Duration()/60)*60)<<" min."<<endl<<endl;
+                }else{
+                    cout<<Disc->Get_Duration() - ((Disc->Get_Duration()/60)*60)<<" min."<<endl<<endl;
+                    
+                }
             }else{
-                cout<<"0:0 min."<<endl<<endl;
+                cout<<"0:00 min."<<endl<<endl;
             }
         
         cout<<"\t 1.- Ver Canciones"<<endl;
@@ -300,10 +319,29 @@ void Menu::songsMenu(NodoDisc *Disc)
         switch (option)
         {
             case 1:
-
+                system("clear");
+                Songs->Show_Songs(Song,Disc->Get_Name());
+                cin.ignore();
+                cout<<"Presione cualquier tecla para continuar";
+                cin.get();
                 break;
             case 2:
-            
+                system("clear");
+                cout<<"\t\t\t- ROCKOLA -"<<endl;
+                cout<<"\t\t\"Agregando Canción\"\n"<<endl;
+                
+                cin.ignore();
+                cout<<"Ingrese Nombre: ";getline(cin,_name);
+                cout<<"Ingrese Duración en Segundos: ";cin>>duration;
+                
+                Songs->Insert(Song,Disc, _name,duration,Disc->Get_Name());
+                
+                Songs->Duration_Disc(Disc,Song);
+                
+                cout<<"\n✔ Agregado con Éxito ✔"<<endl;
+                cout<<"\nPresiones cualquier tecla para continuar";
+                cin.get();
+                
                 break;
             case 3:
             
