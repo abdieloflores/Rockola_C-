@@ -1,3 +1,4 @@
-Cinco,2019,Blues,2019,12435
-Cuatro,abdiel,Reggaeton,2019,246
-Uno,Abdiel,Reggaeton,2019,0
+Blues,Mix,Blues,2019,160
+Clasica,Mix,Clasica,2019,35
+Electronica,Mix,Disco,2019,46
+Pop,Mix,Pop,2019,67

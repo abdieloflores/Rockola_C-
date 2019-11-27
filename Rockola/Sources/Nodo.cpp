@@ -1,5 +1,6 @@
 #include "Nodo.hpp"
 #include "Menu.h"
+#include "Files.hpp"
 
 // NODO DISC CLASS ************************************************************************
 NodoDisc::NodoDisc()

@@ -14,7 +14,7 @@ class SongList{
         void Set_Head(NodoSong *);
         NodoSong *Get_Head();
 
-        void Insert(NodoSong*&,NodoDisc *,string,int,string);
+        void Insert(NodoSong *&,string,int,string);
         void Duration_Disc(NodoDisc *,NodoSong *);
         void Modify(NodoSong *);
         void Delete(string);

@@ -73,8 +73,6 @@
 			isa = PBXGroup;
 			children = (
 				7E0CA195238855370093A042 /* main.cpp */,
-				7E146997238CDCBE0069D4A4 /* Files.cpp */,
-				7E146998238CDCBE0069D4A4 /* Files.hpp */,
 				7E0CA1A623885B460093A042 /* Sources */,
 				7E0CA1A523885B300093A042 /* Includes */,
 			);
@@ -84,6 +82,7 @@
 		7E0CA1A523885B300093A042 /* Includes */ = {
 			isa = PBXGroup;
 			children = (
+				7E146998238CDCBE0069D4A4 /* Files.hpp */,
 				7E0CA19D238856BB0093A042 /* Menu.hpp */,
 				7E0CA1A02388577D0093A042 /* Nodo.hpp */,
 				7E0CA1A32388590B0093A042 /* DiscList.hpp */,
@@ -95,6 +94,7 @@
 		7E0CA1A623885B460093A042 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				7E146997238CDCBE0069D4A4 /* Files.cpp */,
 				7E0CA19C238856BB0093A042 /* Menu.cpp */,
 				7E0CA19F2388577D0093A042 /* Nodo.cpp */,
 				7E0CA1A22388590B0093A042 /* DiscList.cpp */,

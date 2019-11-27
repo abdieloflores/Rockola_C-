@@ -9,7 +9,8 @@ int main(){
 
     Menu menu1;
     
-    menu1.mainMenu();
-    
+    while (1) {
+        menu1.mainMenu();
+    }
     return 0;
 }

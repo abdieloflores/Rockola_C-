@@ -1,4 +1,5 @@
-Cinco,123,Cuatro
-Dios,123,Cinco
-Doce,12312,Cinco
-doce,123,Cuatro
+Blues2,40,Blues
+Blues1,120,Blues
+Clasica1,35,Clasica
+Electronica1,46,Electronica
+Pop1,67,Pop

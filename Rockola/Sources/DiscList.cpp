@@ -1,5 +1,6 @@
 #include <string>
 #include "DiscList.hpp"
+#include "Files.hpp"
 
 DiscList::DiscList()
 {

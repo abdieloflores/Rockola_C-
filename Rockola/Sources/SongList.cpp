@@ -2,6 +2,7 @@
 #include "SongList.hpp"
 #include "DiscList.hpp"
 #include "Nodo.hpp"
+#include "Files.hpp"
 
 
 SongList::SongList()
@@ -22,12 +23,12 @@ NodoSong *SongList::Get_Head()
     return head;
 }
 
-void SongList::Insert(NodoSong*& _head,NodoDisc *Disc,string _name,int _duration,string _disc)
+void SongList::Insert(NodoSong*& _head,string _name,int _duration,string _disc)
 {
     NodoSong *new_nodo = new NodoSong();
     new_nodo->Set_Name(_name);
     new_nodo->Set_Duration(_duration);
-    new_nodo->Set_Disc(Disc->Get_Name());
+    new_nodo->Set_Disc(_disc);
 
     NodoSong *aux1 = _head;
     NodoSong *aux2 = NULL;
@@ -125,33 +126,26 @@ void SongList::Delete_All(NodoSong *&_head,string _disc)
     }
 }
 
-void SongList::Show_Songs(NodoSong *_head,string disc)
+void SongList::Show_Songs(NodoSong *_head,string discName)
 {
-        NodoSong *aux1 = _head;
-        NodoSong *aux2;
-        int cont=1;
+    NodoSong *aux1 = _head;
+    int cont=1,cont2 = 0;
 
-       if(aux1 == NULL)
-       {
-
-           cout<<"x No hay canciones agregadas en el Discox\n"<<endl;
-
-       }else{
-           if ((aux1 != NULL) && disc == aux1->Get_Disc()) {
-               do
-               {
-                   cout<<cont<<".- "<<aux1->Get_Name()<<endl;
-                   aux2 = aux1;
-                   aux1 = aux1->Get_Next();
-                   cont++;
-               }while (aux1 != NULL);
-           }
-           
-           if (cont == 0)
-           {
-               cout<<"x No hay canciones agregadas en el disco x\n"<<endl;
-           }
-       }
+    while (aux1 != NULL)
+    {
+        if ((aux1 != NULL) && (aux1->Get_Disc() == discName))
+        {
+            cout<<cont<<".- "<<aux1->Get_Name()<<endl;
+            cont++;
+            cont2++;
+        }
+        aux1 = aux1->Get_Next();
+    }
+    
+    if (cont2 == 0)
+    {
+        cout<<"x No hay canciones agregadas en el disco x\n"<<endl;
+    }
 }
 
 NodoSong *SongList::Get_Search(NodoSong *_head,string _name)
