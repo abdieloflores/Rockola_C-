@@ -18,14 +18,14 @@ NodoDisc *DiscList::Get_Head()
     return head;
 }
 
-void DiscList::Insert(NodoDisc *&_head,string _name,string _artist,string _genre,string _year)
+void DiscList::Insert(NodoDisc*& _head,string _name,string _artist,string _genre,string _year,int _duration)
 {
-    head = _head;
     NodoDisc *new_nodo = new NodoDisc();
     new_nodo->Set_Name(_name);
     new_nodo->Set_Artist(_artist);
     new_nodo->Set_Genre(_genre);
     new_nodo->Set_Year(_year);
+    new_nodo->Set_Duration(_duration);
 
     NodoDisc *aux1 = _head;
     NodoDisc *aux2 = NULL;
@@ -53,9 +53,30 @@ void DiscList::Modify(NodoDisc *_modified)
     modifyMenu.~Menu();
 }
 
-void DiscList::Delete(NodoDisc *)
+void DiscList::Delete(NodoDisc *&_head,string _name)
 {
-
+    if (_head != NULL)
+    {
+        NodoDisc *aux_delete;
+        NodoDisc *previous = NULL;
+        aux_delete = _head;
+        
+        while ((aux_delete != NULL) && (aux_delete->Get_Name()!=_name))
+        {
+            previous = aux_delete;
+            aux_delete = aux_delete->Get_Next();
+        }
+        if (aux_delete==NULL) {
+            cout<<"El disco a eliminar no existe"<<endl;
+        }
+        else if(previous == NULL){
+            _head = _head->Get_Next();
+            delete aux_delete;
+        }else{
+            previous->Set_Next(aux_delete->Get_Next());
+            delete aux_delete;
+        }
+    }
 }
 
 
@@ -78,7 +99,7 @@ void DiscList::Show_All(NodoDisc *_head)
                 cout<<"Año: " <<aux1->Get_Year()<<endl;
                 cout<<"Duración: ";
                 if(aux1->Get_Duration()>0){
-                    cout<<aux1->Get_Duration()/60<<":"<<aux1->Get_Duration() - ((aux1->Get_Duration()/60)*60)<<" min."<<endl;
+                    cout<<aux1->Get_Duration()/60<<":"<<aux1->Get_Duration() - ((aux1->Get_Duration()/60)*60)<<" min."<<endl<<endl;
                 }else{
                     cout<<"0:0 min."<<endl<<endl;
                 }
@@ -139,24 +160,45 @@ void DiscList::Show_For_Genre(NodoDisc *_head,string _gener)
     }
 }
 
-
-
-NodoDisc *DiscList::Get_Search(NodoDisc *_head,string name)
+void DiscList::ModifyDiscNameInSongs(NodoSong *_head,string previousName,string newName)
 {
-    NodoDisc *aux1 = _head;
-    NodoDisc *aux2 = NULL;
-
-    while (aux1 != NULL && _head->Get_Name() != name)
-    {
-            aux2 = aux1;
-            aux1 = aux1->Get_Next();
-
-    }
+    NodoSong *Aux1 = _head;
     
-    if (aux1 == NULL)
-    {
-        return NULL;
-    }else{
-        return aux1;
+    while (Aux1 != NULL) {
+        if (Aux1->Get_Disc() == previousName) {
+            Aux1->Set_Disc(newName);
+            Aux1 = Aux1->Get_Next();
+        }
     }
+}
+
+
+NodoDisc *DiscList::Get_Search(NodoDisc *_head,string _name)
+{
+    NodoDisc *aux1 = new NodoDisc();
+    aux1 = _head;
+    bool band = false;
+
+    while ((aux1 != NULL) && (_head->Get_Name() <= _name))
+    {
+        if (aux1->Get_Name() == _name)
+        {
+            band = true;
+            break;
+        }else{
+            aux1 = aux1->Get_Next();
+        }
+    }
+    if (band == true) {
+        return aux1;
+    }else{
+        return NULL;
+    }
+}
+
+void DiscList::Destroy(NodoDisc *&_head)
+{
+    NodoDisc *aux = _head;
+    _head = aux;
+    delete aux;
 }

@@ -11,6 +11,7 @@
 		7E0CA1A12388577D0093A042 /* Nodo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E0CA19F2388577D0093A042 /* Nodo.cpp */; };
 		7E0CA1A42388590B0093A042 /* DiscList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E0CA1A22388590B0093A042 /* DiscList.cpp */; };
 		7E0CA1A723885EA90093A042 /* Menu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E0CA19C238856BB0093A042 /* Menu.cpp */; };
+		7E146999238CDCBE0069D4A4 /* Files.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7E146997238CDCBE0069D4A4 /* Files.cpp */; };
 		7EA2FAB52388960600A669F1 /* SongList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7EA2FAB32388960600A669F1 /* SongList.cpp */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,8 @@
 		7E0CA1A02388577D0093A042 /* Nodo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Nodo.hpp; sourceTree = "<group>"; };
 		7E0CA1A22388590B0093A042 /* DiscList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DiscList.cpp; sourceTree = "<group>"; };
 		7E0CA1A32388590B0093A042 /* DiscList.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DiscList.hpp; sourceTree = "<group>"; };
+		7E146997238CDCBE0069D4A4 /* Files.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Files.cpp; sourceTree = "<group>"; };
+		7E146998238CDCBE0069D4A4 /* Files.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Files.hpp; sourceTree = "<group>"; };
 		7EA2FAB32388960600A669F1 /* SongList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = SongList.cpp; sourceTree = "<group>"; };
 		7EA2FAB42388960600A669F1 /* SongList.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = SongList.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -70,6 +73,8 @@
 			isa = PBXGroup;
 			children = (
 				7E0CA195238855370093A042 /* main.cpp */,
+				7E146997238CDCBE0069D4A4 /* Files.cpp */,
+				7E146998238CDCBE0069D4A4 /* Files.hpp */,
 				7E0CA1A623885B460093A042 /* Sources */,
 				7E0CA1A523885B300093A042 /* Includes */,
 			);
@@ -156,6 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E0CA1A42388590B0093A042 /* DiscList.cpp in Sources */,
+				7E146999238CDCBE0069D4A4 /* Files.cpp in Sources */,
 				7E0CA1A12388577D0093A042 /* Nodo.cpp in Sources */,
 				7EA2FAB52388960600A669F1 /* SongList.cpp in Sources */,
 				7E0CA1A723885EA90093A042 /* Menu.cpp in Sources */,

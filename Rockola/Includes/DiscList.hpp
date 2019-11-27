@@ -14,12 +14,14 @@ class DiscList
         void Set_Head(NodoDisc *);
         NodoDisc *Get_Head();
 
-        void Insert(NodoDisc *&,string,string,string,string);
+        void Insert(NodoDisc*&,string,string,string,string,int);
         void Modify(NodoDisc *);
-        void Delete(NodoDisc *);
+        void Delete(NodoDisc *&,string);
         void Show_All(NodoDisc *);
         void Show_All_Names(NodoDisc *);
         void Show_For_Genre(NodoDisc *,string);
+        void ModifyDiscNameInSongs(NodoSong *,string,string);
+        void Destroy(NodoDisc *&);
 
         NodoDisc *Get_Search(NodoDisc *,string);
 };

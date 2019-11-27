@@ -3,10 +3,11 @@
 #include "DiscList.hpp"
 #include "SongList.hpp"
 #include "Nodo.hpp"
+#include "Files.hpp"
 
 using namespace std;
 
-NodoDisc *Aux = NULL;
+NodoDisc *Disc = NULL;
 DiscList *Discs = new DiscList();
 
 NodoSong *Song = NULL;
@@ -24,9 +25,11 @@ Menu::~Menu()
 
 void Menu::mainMenu()
 {
-    Discs->Set_Head(Aux);
+    Discs->Set_Head(Disc);
     Songs->Set_Head(Song);
-    int option,finish=1,finish2=1;
+    Files file(Disc,Song);
+    
+    int option,finish=1,finish2;
     string name, artist, genre, year;
     while (finish==1)
     {
@@ -39,33 +42,54 @@ void Menu::mainMenu()
         cout<<"\t3.- Agregar Disco"<<endl;
         cout<<"\t4.- Modificar Disco"<<endl;
         cout<<"\t5.- Eliminar Disco"<<endl;
-        cout<<"\t6.- Salir\n"<<endl;
+        cout<<"\t6.- Cargar Info"<<endl;
+        cout<<"\t7.- Guardar Info"<<endl;
+        cout<<"\t8.- Salir\n"<<endl;
         cout<<"Opcion: ";
         cin>>option;
 
         switch (option)
         {
             case 1:
-                discMenu();
+                if (Disc == NULL) {
+                    system("clear");
+                    finish2 = 0;
+                    cout<<" x No hay discos agregados x"<<endl;
+                    cin.get();
+                    cout<<"\nPresione cualquier tecla para continuar";
+                    cin.get();
+                }else{
+                    discMenu();
+                    
+                }
                 break;
             case 2:
-                
+                finish2=1;
                 while (finish2 == 1)
                 {
+                    if (Disc == NULL) {
+                        system("clear");
+                        finish2 = 0;
+                        cout<<" x No hay discos agregados x"<<endl;
+                        cin.get();
+                        cout<<"\nPresione cualquier tecla para continuar";
+                        cin.get();
+                    }else{
                     system("clear");
-                    Discs->Show_All_Names(Aux);
+                    Discs->Show_All_Names(Disc);
                     cin.ignore();
-                    cout<<"Escriba el nombre del disco: ";
+                    cout<<"\nEscriba el nombre del disco: ";
                     getline(cin,name);
-                    if(Discs->Get_Search(Aux,name)!=NULL)
+                    if(Discs->Get_Search(Disc,name)!= NULL)
                     {
-                        songsMenu(Discs->Get_Search(Aux,name));
+                        songsMenu(Discs->Get_Search(Disc,name));
                         finish2 = 0;
                     }else{
                         system("clear");
-                        cout<<" x No escribio correctamente el nombre x";
+                        cout<<" x No escribio correctamente el nombre x"<<endl;
                         cout<<"\nPresiones cualquier tecla para continuar";
                         cin.get();
+                    }
                     }
                 }
                 
@@ -82,7 +106,7 @@ void Menu::mainMenu()
                 cin.ignore();
                 cout<<"Ingrese Año: ";getline(cin,year);
                 
-                Discs->Insert(Aux, name, artist, genre, year);
+                Discs->Insert(Disc,name, artist, genre, year,0);
                 
                 cout<<"\n✔ Agregado con Éxito ✔"<<endl;
                 cout<<"\nPresiones cualquier tecla para continuar";
@@ -90,28 +114,78 @@ void Menu::mainMenu()
                 
                 break;
             case 4:
-                system("clear");
-                cout<<"\t\t\t- ROCKOLA -"<<endl;
-                cout<<"\t\t\"Modificando Disco\"\n"<<endl;
-                Discs->Show_All_Names(Aux);
-                cout<<endl<<endl;
-                cin.ignore();
-                cout<<"Ingrese el nombre del disco: ";getline(cin,name);
-                if (Discs->Get_Search(Aux,name)==NULL) {
+                if (Disc == NULL) {
                     system("clear");
-                    cout<<"x No se encontro el disco a modificar x"<<endl<<endl;
-                    cout<<"\"Favor de escribir el nombre del disco\ncomo aparece en la lista o verifique que\neste agregado el disco.\"";
-                    
-                    cout<<"\nPresiones cualquier tecla para continuar";
+                    finish2 = 0;
+                    cout<<" x No hay discos agregados x"<<endl;
+                    cin.get();
+                    cout<<"\nPresione cualquier tecla para continuar";
                     cin.get();
                 }else{
-                    modifyDiscMenu(Discs->Get_Search(Aux,name));
+                    system("clear");
+                    cout<<"\t\t\t- ROCKOLA -"<<endl;
+                    cout<<"\t\t\"Modificando Disco\"\n"<<endl;
+                    Discs->Show_All_Names(Disc);
+                    cout<<endl<<endl;
+                    cin.ignore();
+                    cout<<"Ingrese el nombre del disco: ";getline(cin,name);
+                    if (Discs->Get_Search(Disc,name)==NULL) {
+                        system("clear");
+                        cout<<"x No se encontro el disco a modificar x"<<endl<<endl;
+                        cout<<"\"Favor de escribir el nombre del disco como aparece en la lista o verifique que este agregado el disco.\"";
+                        
+                        cout<<"\nPresiones cualquier tecla para continuar";
+                        cin.get();
+                    }else{
+                        modifyDiscMenu(Discs->Get_Search(Disc,name));
+                    }
                 }
                 break;
             case 5:
-            
+                if (Disc == NULL) {
+                    system("clear");
+                    cout<<" x No hay disco agregados x"<<endl;
+                    cin.get();
+                    cout<<"\nPresione cualquier tecla para continuar";
+                    cin.get();
+                }else{
+                    system("clear");
+                    cout<<"\t\t\t- ROCKOLA -"<<endl;
+                    cout<<"\t\t\"Eliminando Disco\"\n";
+                    Discs->Show_All_Names(Disc);
+                    cout<<endl<<endl;
+                    cin.ignore();
+                    cout<<"Ingrese el nombre del disco: ";getline(cin,name);
+                    if (Discs->Get_Search(Disc,name)==NULL)
+                    {
+                        system("clear");
+                        cout<<"x No se encontro el disco a eliminar x"<<endl<<endl;
+                        cout<<"\"Favor de escribir el nombre del disco como aparece en la lista o verifique que este agregado el disco.\"";
+                        
+                        cout<<"\nPresiones cualquier tecla para continuar";
+                        cin.get();
+                    }else{
+                        system("clear");
+                        Songs->Delete(Discs->Get_Search(Disc,name)->Get_Name());
+                        Discs->Delete(Disc,name);
+                        cout<<"\n✔ Eliminado con Éxito ✔"<<endl;
+                        cout<<"\nPresiones cualquier tecla para continuar";
+                        cin.get();
+                    }
+                }
                 break;
             case 6:
+                file.readSongs();
+                file.readDiscs();
+                break;
+            case 7:
+                file.writeSongs();
+                file.writeDiscs();
+                break;
+            case 8:
+                Songs->Destroy(Song);
+                Discs->Destroy(Disc);
+                
                 finish=0;
                 exit(1);
                 break;
@@ -148,7 +222,7 @@ void Menu::discMenu()
         {
             case 1:
                 system("clear");
-                Discs->Show_All(Aux);
+                Discs->Show_All(Disc);
                 cin.ignore();
                 cout<<"Presione cualquier tecla para continuar";
                 cin.get();
@@ -157,7 +231,7 @@ void Menu::discMenu()
                 cout<<"Selecciones el genero: ";
                 genreMenu(genre);
                 system("clear");
-                Discs->Show_For_Genre(Aux,genre);
+                Discs->Show_For_Genre(Disc,genre);
                 cin.ignore();
                 cout<<"Presione cualquier tecla para continuar";
                 cin.get();
@@ -281,11 +355,12 @@ void Menu::genreMenu(string &genre)
 }
 void Menu::songsMenu(NodoDisc *Disc)
 {
-    int option,finish=1,duration;
+    int option,finish=1,finish2,duration;
     string _name;
 
     while (finish == 1)
     {
+        finish2 =
         system("clear");
         cout<<"\t\t\t- ROCKOLA -\n"<<endl;
         
@@ -311,8 +386,7 @@ void Menu::songsMenu(NodoDisc *Disc)
         cout<<"\t 3.- Reproducir Canción"<<endl;
         cout<<"\t 4.- Modificar Canción"<<endl;
         cout<<"\t 5.- Eliminar Canción"<<endl;
-        cout<<"\t 6.- Eliminar Todas Las Canciones"<<endl;
-        cout<<"\t 7.- Regresar al Menu Principal\n"<<endl;
+        cout<<"\t 6.- Regresar al Menu Principal\n"<<endl;
         cout<<"Opcion: ";
         cin>>option;
 
@@ -322,7 +396,7 @@ void Menu::songsMenu(NodoDisc *Disc)
                 system("clear");
                 Songs->Show_Songs(Song,Disc->Get_Name());
                 cin.ignore();
-                cout<<"Presione cualquier tecla para continuar";
+                cout<<"\nPresione cualquier tecla para continuar";
                 cin.get();
                 break;
             case 2:
@@ -344,18 +418,75 @@ void Menu::songsMenu(NodoDisc *Disc)
                 
                 break;
             case 3:
-            
+                system("clear");
+                cout<<" Reproduciendo canción "<<endl<<endl;
+                cin.ignore();
+                cout<<"Presione cualquier tecla para terminar de reproducir"<<endl;
+                cin.get();
                 break;
             case 4:
-            
+                if (Song == NULL) {
+                    system("clear");
+                    cout<<" x No hay canciones agregadas x"<<endl;
+                    cin.get();
+                    cout<<"\nPresione cualquier tecla para continuar";
+                    cin.get();
+                }else{
+                    system("clear");
+                    cout<<"\t\t\t- ROCKOLA -"<<endl;
+                    cout<<"\t\t\"Modificando Canción\"\n";
+                    Songs->Show_Songs(Song, Disc->Get_Name());
+                    cout<<endl<<endl;
+                    cin.ignore();
+                    cout<<"Ingrese el nombre de la cancion: ";getline(cin,_name);
+                    if (Songs->Get_Search(Song,_name)==NULL)
+                    {
+                        system("clear");
+                        cout<<"x No se encontro la cancion a modificar x"<<endl<<endl;
+                        cout<<"\"Favor de escribir el nombre del disco como aparece en la lista o verifique que este agregado el disco.\"";
+                        
+                        cout<<"\nPresiones cualquier tecla para continuar";
+                        cin.get();
+                    }else{
+                        modifySongMenu(Songs->Get_Search(Song,_name));
+                    }
+                }
+                Songs->Duration_Disc(Disc,Song);
                 break;
             case 5:
-            
+                if (Song == NULL) {
+                    system("clear");
+                    cout<<" x No hay canciones agregadas x"<<endl;
+                    cin.get();
+                    cout<<"\nPresione cualquier tecla para continuar";
+                    cin.get();
+                }else{
+                    system("clear");
+                    cout<<"\t\t\t- ROCKOLA -"<<endl;
+                    cout<<"\t\t\"Eliminando Canción\"\n";
+                    Songs->Show_Songs(Song, Disc->Get_Name());
+                    cout<<endl<<endl;
+                    cin.ignore();
+                    cout<<"Ingrese el nombre de la cancion: ";getline(cin,_name);
+                    if (Songs->Get_Search(Song,_name) == NULL)
+                    {
+                        system("clear");
+                        cout<<"x No se encontro la cancion a eliminar x"<<endl<<endl;
+                        cout<<"\"Favor de escribir el nombre del disco como aparece en la lista o verifique que este agregado el disco.\"";
+                        
+                        cout<<"\nPresiones cualquier tecla para continuar";
+                        cin.get();
+                    }else{
+                        Songs->Delete(_name);
+                        cout<<"\n✔ Eliminada con Éxito ✔"<<endl;
+                        cout<<"\nPresiones cualquier tecla para continuar";
+                        cin.get();
+                    }
+                }
+                Songs->Duration_Disc(Disc,Song);
+                
                 break;
             case 6:
-            
-                break;
-            case 7:
                 finish=0;
                 break;
             default:
@@ -366,12 +497,11 @@ void Menu::songsMenu(NodoDisc *Disc)
                 break;
         }
     }
-    mainMenu();
 }
 
 void Menu::modifyDiscMenu(NodoDisc *modified){
     int option,finish=1;
-    string name, artist, genre, year;
+    string name,nameAux, artist, genre, year;
 
     while (finish==1)
     {
@@ -385,9 +515,15 @@ void Menu::modifyDiscMenu(NodoDisc *modified){
         cout<<"Año: " <<modified->Get_Year()<<endl;
         cout<<"Duración: ";
         if(modified->Get_Duration()>0){
-            cout<<modified->Get_Duration()/60<<":"<<modified->Get_Duration() - ((modified->Get_Duration()/60)*60)<<" min."<<endl;
+            cout<<modified->Get_Duration()/60<<":";
+            if ((modified->Get_Duration() - ((modified->Get_Duration()/60)*60))<10) {
+              cout<<"0"<<modified->Get_Duration() - ((modified->Get_Duration()/60)*60)<<" min."<<endl<<endl;
+            }else{
+                cout<<modified->Get_Duration() - ((modified->Get_Duration()/60)*60)<<" min."<<endl<<endl;
+                
+            }
         }else{
-            cout<<"0:0 min."<<endl<<endl;
+            cout<<"0:00 min."<<endl<<endl;
         }
 
         cout<<"\t1.- Modificar Info Completa"<<endl;
@@ -398,10 +534,10 @@ void Menu::modifyDiscMenu(NodoDisc *modified){
         cout<<"\t6.- Regresar Menu Principal\n"<<endl;
         cout<<"Opcion: ";
         cin>>option;
-
         switch (option)
         {
             case 1:
+                nameAux = modified->Get_Name();
                 system("clear");
                 cin.ignore();
                 cout<<"Ingrese Nombre: ";getline(cin,name);
@@ -413,47 +549,61 @@ void Menu::modifyDiscMenu(NodoDisc *modified){
                 modified->Set_Artist(artist);
                 modified->Set_Genre(genre);
                 modified->Set_Year(year);
-
+                
+                
+                Discs->ModifyDiscNameInSongs(Song, nameAux, name);
+                
                 cout<<"\n\n✔ Modificado con Éxito ✔"<<endl;
                 cin.ignore();
                 cout<<"\nPresiones cualquier tecla para continuar";
                 cin.get();
+                finish=0;
                 break;
             case 2:
                 system("clear");
+                cin.ignore();
                 cout<<"Ingrese Nombre: ";getline(cin,name);
                 modified->Set_Name(name);
+                
+                Discs->ModifyDiscNameInSongs(Song, nameAux, name);
                 cout<<"\n\n✔ Modificado con Éxito ✔"<<endl;
                 cin.ignore();
                 cout<<"\nPresiones cualquier tecla para continuar";
                 cin.get();
+                finish=0;
                 break;
             case 3:
                 system("clear");
+                cin.ignore();
                 cout<<"Ingrese Artista: ";getline(cin,artist);
                 modified->Set_Artist(artist);
                 cout<<"\n\n✔ Modificado con Éxito ✔"<<endl;
                 cin.ignore();
                 cout<<"\nPresiones cualquier tecla para continuar";
                 cin.get();
+                finish=0;
                 break;
             case 4:
                 system("clear");
+                cin.ignore();
                 cout<<"Ingrese Genero: "<<endl;genreMenu(genre);
                 modified->Set_Genre(genre);
                 cout<<"\n\n✔ Modificado con Éxito ✔"<<endl;
                 cin.ignore();
                 cout<<"\nPresiones cualquier tecla para continuar";
                 cin.get();
+                finish=0;
                 break;
             case 5:
                 system("clear");
+                cin.ignore();
                 cout<<"Ingrese Año: ";getline(cin,year);
                 modified->Set_Year(year);
                 cout<<"\n\n✔ Modificado con Éxito ✔"<<endl;
                 cin.ignore();
                 cout<<"\nPresiones cualquier tecla para continuar";
                 cin.get();
+                finish=0;
                 break;
             case 6:
                 finish=0;
@@ -481,9 +631,15 @@ void Menu::modifySongMenu(NodoSong *modified){
         cout<<"Nombre: "<<modified->Get_Name()<<endl;
         cout<<"Duración: ";
         if(modified->Get_Duration()>0){
-            cout<<modified->Get_Duration()/60<<":"<<modified->Get_Duration() - ((modified->Get_Duration()/60)*60)<<" min."<<endl;
+            cout<<modified->Get_Duration()/60<<":";
+            if ((modified->Get_Duration() - ((modified->Get_Duration()/60)*60))<10) {
+              cout<<"0"<<modified->Get_Duration() - ((modified->Get_Duration()/60)*60)<<" min."<<endl<<endl;
+            }else{
+                cout<<modified->Get_Duration() - ((modified->Get_Duration()/60)*60)<<" min."<<endl<<endl;
+                
+            }
         }else{
-            cout<<"0:0 min."<<endl<<endl;
+            cout<<"0:00 min."<<endl<<endl;
         }
         
         cout<<"\t1.- Modificar Info Completa"<<endl;
@@ -540,5 +696,4 @@ void Menu::modifySongMenu(NodoSong *modified){
                 break;
         }
     }
-    songsMenu(Discs->Get_Search(Aux,modified->Get_Name()));
 }

@@ -1,0 +1,3 @@
+Cinco,2019,Blues,2019,12435
+Cuatro,abdiel,Reggaeton,2019,246
+Uno,Abdiel,Reggaeton,2019,0

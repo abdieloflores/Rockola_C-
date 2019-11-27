@@ -14,11 +14,13 @@ class SongList{
         void Set_Head(NodoSong *);
         NodoSong *Get_Head();
 
-        void Insert(NodoSong *&,NodoDisc *,string,int,string);
+        void Insert(NodoSong*&,NodoDisc *,string,int,string);
         void Duration_Disc(NodoDisc *,NodoSong *);
         void Modify(NodoSong *);
-        void Delete(NodoSong *&,string);
+        void Delete(string);
+        void Delete_All(NodoSong*&,string);
         void Show_Songs(NodoSong *,string);
+        void Destroy(NodoSong *&);
 
         NodoSong *Get_Search(NodoSong *,string);
     
