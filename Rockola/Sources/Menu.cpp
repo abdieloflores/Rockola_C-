@@ -54,6 +54,7 @@ void Menu::mainMenu()
                 if (Disc == NULL) {
                     system("clear");
                     finish2 = 0;
+                    system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Fail.mp3  &>/dev/null &");
                     cout<<" x No hay discos agregados x"<<endl;
                     cin.get();
                     cout<<"\nPresione cualquier tecla para continuar";
@@ -71,6 +72,7 @@ void Menu::mainMenu()
                     {
                         system("clear");
                         finish2 = 0;
+                        system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Fail.mp3  &>/dev/null &");
                         cout<<" x No hay discos agregados x"<<endl;
                         cin.get();
                         cout<<"\nPresione cualquier tecla para continuar";
@@ -87,6 +89,7 @@ void Menu::mainMenu()
                             finish2 = 0;
                         }else{
                             system("clear");
+                            system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Fail.mp3  &>/dev/null &");
                             cout<<" x No escribio correctamente el nombre x"<<endl;
                             cout<<"\nPresiones cualquier tecla para continuar";
                             cin.get();
@@ -109,7 +112,7 @@ void Menu::mainMenu()
                 cout<<"Ingrese Año: ";getline(cin,year);
                 
                 Discs->Insert(Disc,name, artist, genre, year,0);
-                
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Correct.mp3  &>/dev/null &");
                 cout<<"\n✔ Agregado con Éxito ✔"<<endl;
                 cout<<"\nPresiones cualquier tecla para continuar";
                 cin.get();
@@ -119,6 +122,7 @@ void Menu::mainMenu()
                 if (Disc == NULL) {
                     system("clear");
                     finish2 = 0;
+                    system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Fail.mp3  &>/dev/null &");
                     cout<<" x No hay discos agregados x"<<endl;
                     cin.get();
                     cout<<"\nPresione cualquier tecla para continuar";
@@ -147,6 +151,7 @@ void Menu::mainMenu()
             case 5:
                 if (Disc == NULL) {
                     system("clear");
+                    system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Fail.mp3  &>/dev/null &");
                     cout<<" x No hay disco agregados x"<<endl;
                     cin.get();
                     cout<<"\nPresione cualquier tecla para continuar";
@@ -162,6 +167,7 @@ void Menu::mainMenu()
                     if (Discs->Get_Search(Disc,name)==NULL)
                     {
                         system("clear");
+                        system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Fail.mp3  &>/dev/null &");
                         cout<<"x No se encontro el disco a eliminar x"<<endl<<endl;
                         cout<<"\"Favor de escribir el nombre del disco como aparece en la lista o verifique que este agregado el disco.\"";
                         
@@ -171,6 +177,7 @@ void Menu::mainMenu()
                         system("clear");
                         Songs->Delete(Discs->Get_Search(Disc,name)->Get_Name());
                         Discs->Delete(Disc,name);
+                        system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Correct.mp3  &>/dev/null &");
                         cout<<"\n✔ Eliminado con Éxito ✔"<<endl;
                         cout<<"\nPresiones cualquier tecla para continuar";
                         cin.get();
@@ -191,11 +198,14 @@ void Menu::mainMenu()
             case 8:
                 Songs->Destroy(Song);
                 Discs->Destroy(Disc);
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Bye.mp3");
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Close.mp3 &>/dev/null &");
                 finish=0;
                 exit(1);
                 break;
             default:
                 system("clear");
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Fail.mp3  &>/dev/null &");
                 cout<<"\n\t\tNo existe la opción"<<endl<<endl;
                 cout<<"Presione cualquier tecla para continuar";
                 cin.get();
@@ -247,6 +257,7 @@ void Menu::discMenu()
                 break;
             default:
                 system("clear");
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Fail.mp3  &>/dev/null &");
                 cout<<"\n\t\tNo existe la opción"<<endl<<endl;
                 cout<<"Presione cualquier tecla para continuar";
                 cin.get();
@@ -420,6 +431,7 @@ void Menu::songsMenu(NodoDisc *_Disc)
                 
                 Songs->Duration_Disc(_Disc,Song);
                 
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Correct.mp3  &>/dev/null &");
                 cout<<"\n✔ Agregado con Éxito ✔"<<endl;
                 cout<<"\nPresiones cualquier tecla para continuar";
                 cin.get();
@@ -434,6 +446,7 @@ void Menu::songsMenu(NodoDisc *_Disc)
                 cout<<"\nIngrese nombre de la canción: ";getline(cin,_name);
                 if (Songs->Get_Search(Song,_name)==NULL) {
                     system("clear");
+                    system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Fail.mp3  &>/dev/null &");
                     cout<<"x No se encontro la cancion x"<<endl<<endl;
                     cout<<"\"Favor de escribir el nombre como aparece en la lista o verifique que este agregada la canción.\""<<endl;
                     
@@ -443,12 +456,13 @@ void Menu::songsMenu(NodoDisc *_Disc)
                     system("clear");
                     cout<<"\t\t\t- ROCKOLA -"<<endl;
                     cout<<"\t\t\"Reproduciendo Canción\"\n"<<endl;
+                    cout<<"\n - Reproduciendo "<<Songs->Get_Search(Song,_name)->Get_Name()<<" - "<<endl<<endl;
                     direction = afplay+' '+carpet+Songs->Get_Search(Song,_name)->Get_Name()+type+' '+command;
                     system(direction.c_str());
                     /*
                      
                      Para reproducir debe tener la estructura siguiente
-                     "afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/New_Year_s_Anthem.mp3  &>/dev/null &"
+                     system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/New_Year_s_Anthem.mp3  &>/dev/null &")
                      afplay = Comando para reproducir en consola en macos
                      &>/dev/null & = instruccion para que se queda plasmada la pantalla en negro y siga el programa
                      killal afplay = termina las tareas en segundo plano en este caso el afplay
@@ -462,6 +476,7 @@ void Menu::songsMenu(NodoDisc *_Disc)
             case 4:
                 if (Song == NULL) {
                     system("clear");
+                    system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Fail.mp3  &>/dev/null &");
                     cout<<" x No hay canciones agregadas x"<<endl;
                     cin.get();
                     cout<<"\nPresione enter para continuar...";
@@ -477,6 +492,7 @@ void Menu::songsMenu(NodoDisc *_Disc)
                     if (Songs->Get_Search(Song,_name)==NULL)
                     {
                         system("clear");
+                        system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Fail.mp3  &>/dev/null &");
                         cout<<"x No se encontro la cancion a modificar x"<<endl<<endl;
                         cout<<"\"Favor de escribir el nombre del disco como aparece en la lista o verifique que este agregado el disco.\"";
                         
@@ -491,6 +507,7 @@ void Menu::songsMenu(NodoDisc *_Disc)
             case 5:
                 if (Song == NULL) {
                     system("clear");
+                    system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Fail.mp3  &>/dev/null &");
                     cout<<" x No hay canciones agregadas x"<<endl;
                     cin.get();
                     cout<<"\nPresione cualquier tecla para continuar";
@@ -513,6 +530,7 @@ void Menu::songsMenu(NodoDisc *_Disc)
                         cin.get();
                     }else{
                         Songs->Delete(_name);
+                        system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Correct.mp3  &>/dev/null &");
                         cout<<"\n✔ Eliminada con Éxito ✔"<<endl;
                         cout<<"\nPresiones cualquier tecla para continuar";
                         cin.get();
@@ -526,6 +544,7 @@ void Menu::songsMenu(NodoDisc *_Disc)
                 break;
             default:
                 system("clear");
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Fail.mp3  &>/dev/null &");
                 cout<<"\n\t\tNo existe la opción"<<endl<<endl;
                 cout<<"Presione cualquier tecla para continuar";
                 cin.get();
@@ -588,6 +607,7 @@ void Menu::modifyDiscMenu(NodoDisc *modified){
                 
                 Discs->ModifyDiscNameInSongs(Song, nameAux, name);
                 
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Correct.mp3  &>/dev/null &");
                 cout<<"\n\n✔ Modificado con Éxito ✔"<<endl;
                 cin.ignore();
                 cout<<"\nPresiones cualquier tecla para continuar";
@@ -601,9 +621,10 @@ void Menu::modifyDiscMenu(NodoDisc *modified){
                 modified->Set_Name(name);
                 
                 Discs->ModifyDiscNameInSongs(Song, nameAux, name);
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Correct.mp3  &>/dev/null &");
                 cout<<"\n\n✔ Modificado con Éxito ✔"<<endl;
                 cin.ignore();
-                cout<<"\nPresiones cualquier tecla para continuar";
+                cout<<"\nPresione enter para continuar";
                 cin.get();
                 finish=0;
                 break;
@@ -612,9 +633,10 @@ void Menu::modifyDiscMenu(NodoDisc *modified){
                 cin.ignore();
                 cout<<"Ingrese Artista: ";getline(cin,artist);
                 modified->Set_Artist(artist);
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Correct.mp3  &>/dev/null &");
                 cout<<"\n\n✔ Modificado con Éxito ✔"<<endl;
                 cin.ignore();
-                cout<<"\nPresiones cualquier tecla para continuar";
+                cout<<"\nPresiones enter para continuar";
                 cin.get();
                 finish=0;
                 break;
@@ -623,9 +645,10 @@ void Menu::modifyDiscMenu(NodoDisc *modified){
                 cin.ignore();
                 cout<<"Ingrese Genero: "<<endl;genreMenu(genre);
                 modified->Set_Genre(genre);
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Correct.mp3  &>/dev/null &");
                 cout<<"\n\n✔ Modificado con Éxito ✔"<<endl;
                 cin.ignore();
-                cout<<"\nPresiones cualquier tecla para continuar";
+                cout<<"\nPresione enter continuar";
                 cin.get();
                 finish=0;
                 break;
@@ -634,9 +657,10 @@ void Menu::modifyDiscMenu(NodoDisc *modified){
                 cin.ignore();
                 cout<<"Ingrese Año: ";getline(cin,year);
                 modified->Set_Year(year);
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Correct.mp3  &>/dev/null &");
                 cout<<"\n\n✔ Modificado con Éxito ✔"<<endl;
                 cin.ignore();
-                cout<<"\nPresiones cualquier tecla para continuar";
+                cout<<"\nPresione enter para continuar";
                 cin.get();
                 finish=0;
                 break;
@@ -645,6 +669,7 @@ void Menu::modifyDiscMenu(NodoDisc *modified){
                 break;
             default:
                 system("clear");
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Fail.mp3  &>/dev/null &");
                 cout<<"\n\t\tNo existe la opción"<<endl<<endl;
                 cout<<"Presione cualquier tecla para continuar";
                 cin.get();
@@ -694,7 +719,8 @@ void Menu::modifySongMenu(NodoSong *modified){
                 cin.ignore();
                 modified->Set_Name(name);
                 modified->Set_Duration(duration);
-
+                
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Correct.mp3  &>/dev/null &");
                 cout<<"\n\n✔ Modificado con Éxito ✔"<<endl;
                 cin.ignore();
                 cout<<"\nPresiones cualquier tecla para continuar";
@@ -705,6 +731,7 @@ void Menu::modifySongMenu(NodoSong *modified){
                 cin.ignore();
                 cout<<"Ingrese Nombre: ";getline(cin,name);
                 modified->Set_Name(name);
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Correct.mp3  &>/dev/null &");
                 cout<<"\n\n✔ Modificado con Éxito ✔"<<endl;
                 cin.ignore();
                 cout<<"\nPresiones cualquier tecla para continuar";
@@ -715,6 +742,7 @@ void Menu::modifySongMenu(NodoSong *modified){
                 cin.ignore();
                 cout<<"Ingrese Duracion: ";cin>>duration;
                 modified->Set_Duration(duration);
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Correct.mp3  &>/dev/null &");
                 cout<<"\n\n✔ Modificado con Éxito ✔"<<endl;
                 cin.ignore();
                 cout<<"\nPresiones cualquier tecla para continuar";
@@ -725,6 +753,7 @@ void Menu::modifySongMenu(NodoSong *modified){
                 break;
             default:
                 system("clear");
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Fail.mp3  &>/dev/null &");
                 cout<<"\n\t\tNo existe la opción"<<endl<<endl;
                 cout<<"Presione cualquier tecla para continuar";
                 cin.get();
