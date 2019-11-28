@@ -186,19 +186,23 @@ void Menu::mainMenu()
                 finish = 0;
                 break;
             case 6:
+                Songs->Destroy(Song);
+                Discs->Destroy(Disc);
+                
                 file.readDiscs(Disc);
                 file.readSongs(Song,Disc);
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Correct.mp3  &>/dev/null &");
                 finish = 0;
                 break;
             case 7:
                 file.writeSongs();
                 file.writeDiscs();
+                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Correct.mp3  &>/dev/null &");
                 finish = 0;
                 break;
             case 8:
                 Songs->Destroy(Song);
                 Discs->Destroy(Disc);
-                system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Bye.mp3");
                 system("afplay /Users/abdiel/Desktop/Repositorios_GIT/Rockola_C-/Rockola/Music/Close.mp3 &>/dev/null &");
                 finish=0;
                 exit(1);
