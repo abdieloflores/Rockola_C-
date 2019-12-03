@@ -1,0 +1,4 @@
+Blues,Mix,Blues,2019,160
+Clasica,Mix,Clasica,2019,35
+Electronica,Mix,Disco,2019,46
+Pop,Mix,Pop,2019,67
